@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "A9322CDFC7DB6CF8FA6BD3EFCA6F914C474540BA",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "A9322CDFC7DB6CF8FA6BD3EFCA6F914C474540BA" : 9223372036854775807,
+    "DE7B7CF1ABE33184C50ED02EBEA19C1BE96DAD79" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "83DF35EB-3053-49E1-BF89-BC2E7AE15023",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "A9322CDFC7DB6CF8FA6BD3EFCA6F914C474540BA" : "VirtualTourist\/",
+    "DE7B7CF1ABE33184C50ED02EBEA19C1BE96DAD79" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "VirtualTourist",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "VirtualTourist.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ayrka39\/iOSND-4.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A9322CDFC7DB6CF8FA6BD3EFCA6F914C474540BA"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ayrak39\/iOSND-P2.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DE7B7CF1ABE33184C50ED02EBEA19C1BE96DAD79"
+    }
+  ]
+}
