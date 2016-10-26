@@ -13,6 +13,7 @@ import CoreData
 class MapViewController: UIViewController,  UIGestureRecognizerDelegate {
 	
 	var activeAnnotation: Pin!
+	var tempAnnotation = MKPointAnnotation()
 	var lastPinTapped: MKPinAnnotationView?
 	var coordinate = CLLocationCoordinate2D()
 	var initaillyLoaded = false
@@ -68,42 +69,52 @@ class MapViewController: UIViewController,  UIGestureRecognizerDelegate {
 	func longPressRecognized() {
 		let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress(_:)))
 		longPressRecognizer.delegate = self
+		longPressRecognizer.minimumPressDuration = 0.5
 		mapView.addGestureRecognizer(longPressRecognizer)
 		
 	}
 	
-	func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+	func handleLongPress(_ gestureRecognizer: UIGestureRecognizer) {
 		
 		if !isEditing {
 			
-			let location = gestureRecognizer.location(in: mapView)
-			let annotation = MKPointAnnotation()
-			annotation.coordinate = coordinate
-			coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-			
 			switch (gestureRecognizer.state) {
 			case .began:
+				updatePin(gestureRecognizer)
+				mapView.addAnnotation(tempAnnotation)
+				tempAnnotation.coordinate = coordinate
 				print("ready to add pin")
 				return
 			case .changed:
+				updatePin(gestureRecognizer)
+				tempAnnotation.coordinate = coordinate
 				print("coordinate changed")
 			case .ended:
-				let newAnnotation = Pin(annotation: annotation, context: sharedContext)
+				let newAnnotation = Pin(latitude: coordinate.latitude, longitude: coordinate.longitude, title: nil, context: sharedContext)
 				activeAnnotation = newAnnotation
+				activeAnnotation.latitude = coordinate.latitude
+				activeAnnotation.longitude = coordinate.longitude
 				mapView.addAnnotation(activeAnnotation)
-				mapView.removeAnnotation(annotation)
+				mapView.removeAnnotation(tempAnnotation)
 				lookUpLocation(activeAnnotation)
-				getPhotosAtLocation(activeAnnotation.coordinate)
 				
 				do {
 					try sharedContext.save()
-				} catch {}
-	
+				} catch {
+					fatalError("error")
+				}
+				getPhotosAtLocation(activeAnnotation.coordinate)
+				
 			default:
 				break
 			}
 			
 		}
+	}
+	
+	func updatePin(_ gestureRecognizer: UIGestureRecognizer) {
+		let location = gestureRecognizer.location(in: mapView)
+		coordinate = mapView.convert(location, toCoordinateFrom: mapView)
 	}
 	
 	// determines a string-based location for the user's pin using reverse geocoding
@@ -195,7 +206,7 @@ class MapViewController: UIViewController,  UIGestureRecognizerDelegate {
 			if let controller = segue.destination as? PhotoAlbumViewController {
 				controller.annotationToShow = activeAnnotation
 				if imageFetched {
-					controller.loadingText = "retrieving images..."
+					controller.noPhotosLabel.text = "retrieving images..."
 				}
 			}
 			

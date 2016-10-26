@@ -29,12 +29,12 @@ class PhotoAlbumViewController: UIViewController {
 			}
 		}
 	}
-	var loadingText: String? {
-		didSet {
-			noPhotosLabel?.text = loadingText
-			noPhotosLabel?.isHidden = false
-		}
-	} 
+//	var loadingText: String? {
+//		didSet {
+//			noPhotosLabel?.text = loadingText
+//			noPhotosLabel?.isHidden = false
+//		}
+//	} 
 	var sharedContext: NSManagedObjectContext {
 		return CoreDataStack.sharedInstacne.persistentContainer.viewContext
 	}
@@ -48,9 +48,9 @@ class PhotoAlbumViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		noPhotosLabel.isHidden = true
-		if loadingText != nil {
-			noPhotosLabel.text = loadingText
-		}
+//		if loadingText != nil {
+//			noPhotosLabel.text = loadingText
+//		}
 		collectionViewSetting()
 		toolBarSetting()
 		fetchedResultSetting()
@@ -93,7 +93,7 @@ class PhotoAlbumViewController: UIViewController {
 		for index in self.selectedIndexPaths {
 			let photos = self.fetchedResultsController.object(at: index)
 			self.sharedContext.delete(photos)
-			print("did you added to delete: \(selectedIndexPaths)")
+			
 		}
 		// reset selected index paths
 		selectedIndexPaths = []
@@ -111,9 +111,8 @@ class PhotoAlbumViewController: UIViewController {
 		let photos = fetchedResultsController.fetchedObjects!
 		for photo in photos {
 			sharedContext.delete(photo)
-			
 		}
-		loadingText = "retrieving images..."
+
 		flickrClient.getImagesByLocation(latitude: annotationToShow.latitude, longitude: annotationToShow.longitude) { [unowned self] (photoArray, error) in
 			DispatchQueue.main.async {
 				guard error == nil else {
@@ -127,7 +126,7 @@ class PhotoAlbumViewController: UIViewController {
 				
 				self.savePhotosToPin(photoArray, pinToSave: self.annotationToShow)
 				if photoArray.count == 0 {
-					self.loadingText = "No Images Found at this Location."
+					self.noPhotosLabel.text = "No Images Found at this Location."
 				}
 			}
 		}
@@ -171,13 +170,15 @@ extension PhotoAlbumViewController: UICollectionViewDelegate, UICollectionViewDa
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		print("photoVC number-3")
+	
 		if let sections = fetchedResultsController.sections {
 			let currentSection = sections[section]
 			if currentSection.numberOfObjects == 0 {
 				noPhotosLabel.isHidden = false
 			}
+			print("numberofObj: \(currentSection.numberOfObjects)")
 			return currentSection.numberOfObjects
+			
 		}
 		return 1
 
@@ -275,7 +276,6 @@ extension PhotoAlbumViewController: MKMapViewDelegate {
 
 extension PhotoAlbumViewController : UICollectionViewDelegateFlowLayout {
 	
-	
 	func collectionView(_ collectionView: UICollectionView,
 	                    layout collectionViewLayout: UICollectionViewLayout,
 	                    sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -286,14 +286,12 @@ extension PhotoAlbumViewController : UICollectionViewDelegateFlowLayout {
 		
 		return CGSize(width: widthPerItem, height: widthPerItem)
 	}
- 
 	
 	func collectionView(_ collectionView: UICollectionView,
 	                    layout collectionViewLayout: UICollectionViewLayout,
 	                    insetForSectionAt section: Int) -> UIEdgeInsets {
 		return sectionInsets
 	}
- 
 	
 	func collectionView(_ collectionView: UICollectionView,
 	                    layout collectionViewLayout: UICollectionViewLayout,

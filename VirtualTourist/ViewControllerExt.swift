@@ -63,7 +63,6 @@ extension PhotoAlbumViewController {
 		self.collectionView.dataSource = self
 	}
 	
-	
 
 	func fetchedResultSetting() {
 		fetchedResultsController.delegate = self
@@ -89,8 +88,7 @@ extension PhotoAlbumViewController {
 			navigationController?.toolbar.barTintColor = nil
 		case .deleteImages:
 			setToolbarItems([spaceButton, deleteImagesButton, spaceButton], animated: false)
-			navigationController?.toolbar.barTintColor = UIColor(red: 243/255, green: 76/255, blue: 76/255, alpha: 1)
+			navigationController?.toolbar.barTintColor = nil
 		}
 	}
-	
 }

@@ -21,14 +21,14 @@ public class Pin: NSManagedObject, MKAnnotation {
 		super.init(entity: entity, insertInto: context)
 	}
 	
-	init(annotation: MKPointAnnotation, context: NSManagedObjectContext) {
+	init(latitude: Double, longitude: Double, title: String?, context: NSManagedObjectContext) {
 		let entity = NSEntityDescription.entity(forEntityName: "Pin", in: context)!
 		
 		super.init(entity: entity, insertInto: context)
 		
-		latitude = annotation.coordinate.latitude as Double
-		longitude = annotation.coordinate.longitude as Double 
-		title = annotation.title
+		self.latitude = latitude
+		self.longitude = longitude
+		self.title = title
 	}
 
 }
